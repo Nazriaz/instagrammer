@@ -30,7 +30,7 @@ public class Controller {
         return login.login();
     }
     @GetMapping("/load")
-    String load(){
+    String load() throws IOException {
         login.getSessionFromDb();
         return "loaded";
     }

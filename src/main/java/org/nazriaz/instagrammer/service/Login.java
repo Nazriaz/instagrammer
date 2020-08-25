@@ -28,8 +28,8 @@ public class Login {
     Instagram4j instagram4j;
     public String login() throws IOException {
         instagram4j = Instagram4j.builder()
-                .username("СУДА_ЛОГИН")
-                .password("ПАРОЛЬ")
+                .username("ОЩЗФ")
+                .password("JOP@")
                 .build();
         instagram4j.setup();
 
@@ -83,10 +83,12 @@ public class Login {
         }
         return "ok";
     }
-    public void getSessionFromDb(){
-        InstagramSession one = instagramSessionRepo.getOne(0);
+    public void getSessionFromDb() throws IOException {
+        InstagramSession one = instagramSessionRepo.getOne(40);
         Instagram4j session = SessionConverter.convertToInstagram4j(one);
         setInstagram4j(session);
+        instagram4j.setup();
+        instagram4j.login();
         System.out.println("Session successfully loaded");
     }
     public void saveCurrentSession(){

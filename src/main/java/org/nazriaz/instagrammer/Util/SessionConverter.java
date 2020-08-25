@@ -11,7 +11,7 @@ public class SessionConverter {
                 instagramSession.getUuid(),
                 instagramSession.getCookieStore(),
                 instagramSession.getProxy(),
-                instagramSession.getCredentialsProvider());
+                null);
     }
     public static InstagramSession convertToInstagramSession(Instagram4j instagram4j){
         return new InstagramSession(instagram4j.getUsername(),
