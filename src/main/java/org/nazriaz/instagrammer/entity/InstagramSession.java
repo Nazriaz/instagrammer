@@ -1,4 +1,4 @@
-package org.nazriaz.instagrammer.dao;
+package org.nazriaz.instagrammer.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

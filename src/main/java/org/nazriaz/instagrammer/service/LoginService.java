@@ -11,7 +11,7 @@ import org.brunocvcunha.instagram4j.requests.payload.InstagramGetChallengeResult
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramSelectVerifyMethodResult;
 import org.nazriaz.instagrammer.Util.SessionConverter;
-import org.nazriaz.instagrammer.dao.InstagramSession;
+import org.nazriaz.instagrammer.entity.InstagramSession;
 import org.nazriaz.instagrammer.repository.InstagramSessionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +22,14 @@ import java.util.Scanner;
 @Service
 @NoArgsConstructor
 @Data
-public class Login {
+public class LoginService {
     @Autowired
     InstagramSessionRepo instagramSessionRepo;
     Instagram4j instagram4j;
     public String login() throws IOException {
         instagram4j = Instagram4j.builder()
-                .username("ОЩЗФ")
-                .password("JOP@")
+                .username("LOGIN")
+                .password("PASSWORD")
                 .build();
         instagram4j.setup();
 
@@ -83,8 +83,8 @@ public class Login {
         }
         return "ok";
     }
-    public void getSessionFromDb() throws IOException {
-        InstagramSession one = instagramSessionRepo.getOne(40);
+    public void getSessionFromDb(String id) throws IOException {
+        InstagramSession one = instagramSessionRepo.getOne(Integer.valueOf(id));
         Instagram4j session = SessionConverter.convertToInstagram4j(one);
         setInstagram4j(session);
         instagram4j.setup();

@@ -1,7 +1,7 @@
 package org.nazriaz.instagrammer.Util;
 
 import org.brunocvcunha.instagram4j.Instagram4j;
-import org.nazriaz.instagrammer.dao.InstagramSession;
+import org.nazriaz.instagrammer.entity.InstagramSession;
 
 public class SessionConverter {
     public static Instagram4j convertToInstagram4j(InstagramSession instagramSession){
