@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
+
 @Service
 @NoArgsConstructor
 @Data
@@ -26,6 +27,7 @@ public class LoginService {
     @Autowired
     InstagramSessionRepo instagramSessionRepo;
     Instagram4j instagram4j;
+
     public String login() throws IOException {
         instagram4j = Instagram4j.builder()
                 .username("LOGIN")
@@ -83,6 +85,7 @@ public class LoginService {
         }
         return "ok";
     }
+
     public void getSessionFromDb(String id) throws IOException {
         InstagramSession one = instagramSessionRepo.getOne(Integer.valueOf(id));
         Instagram4j session = SessionConverter.convertToInstagram4j(one);
@@ -91,7 +94,8 @@ public class LoginService {
         instagram4j.login();
         System.out.println("Session successfully loaded");
     }
-    public void saveCurrentSession(){
+
+    public void saveCurrentSession() {
         InstagramSession instagramSession = SessionConverter.convertToInstagramSession(instagram4j);
         instagramSessionRepo.save(instagramSession);
         System.out.println("Success to save CurrentSession");

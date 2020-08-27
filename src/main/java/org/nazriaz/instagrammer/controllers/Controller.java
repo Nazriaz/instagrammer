@@ -1,9 +1,13 @@
 package org.nazriaz.instagrammer.controllers;
 
-import org.brunocvcunha.instagram4j.Instagram4j;
-import org.brunocvcunha.instagram4j.requests.*;
-import org.brunocvcunha.instagram4j.requests.payload.*;
-import org.nazriaz.instagrammer.service.*;
+import org.brunocvcunha.instagram4j.requests.InstagramGetUserFollowersRequest;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramFeedItem;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetUserFollowersResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramUser;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramUserSummary;
+import org.nazriaz.instagrammer.service.FeedService;
+import org.nazriaz.instagrammer.service.InstagramUserService;
+import org.nazriaz.instagrammer.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,20 +25,24 @@ public class Controller {
     LoginService loginService;
     @Autowired
     InstagramUserService instagramUserService;
+
     @GetMapping("/login")
     String login() throws IOException {
         return loginService.login();
     }
+
     @GetMapping("/load/{id}")
     String load(@PathVariable String id) throws IOException {
         loginService.getSessionFromDb(id);
         return "loaded";
     }
+
     @GetMapping("/save")
-    String save(){
+    String save() {
         loginService.saveCurrentSession();
         return "saved";
     }
+
     @GetMapping("/getuser")
     String getUser(@RequestParam String username) throws IOException {
         InstagramUser instagramUser = instagramUserService.getUserFromUserName(username);
@@ -45,6 +53,7 @@ public class Controller {
                 .append("following_count").append(instagramUser.following_count).append("\n");
         return stringBuilder.toString();
     }
+
     @GetMapping("/getfeed")
     List getFeed(@RequestParam String username) throws IOException {
         List<InstagramFeedItem> feed = feedService.getLastFeed(username);
@@ -53,6 +62,7 @@ public class Controller {
         }
         return feed;
     }
+
     @GetMapping("/getuserfollowers")
     List getUserFollowers(@RequestParam String username) throws IOException {
         InstagramUser instagramUser = instagramUserService.getUserFromUserName(username);
@@ -64,29 +74,34 @@ public class Controller {
         }
         return users;
     }
+
     @GetMapping("/get")
     List get(@RequestParam String username) throws IOException, InterruptedException {
         instagramUserService.searchUserFollowers(username);
         return instagramUserService.getFollowers();
     }
+
     @GetMapping("/getall")
     List getAll(@RequestParam String username) throws IOException, InterruptedException {
         return feedService.getAllFeed(username);
     }
+
     @GetMapping("/likeall")
     String likeAll(@RequestParam String username) throws IOException, InterruptedException {
         List<InstagramFeedItem> allFeed = feedService.getAllFeed(username);
         feedService.postLike(allFeed);
         return "ok";
     }
+
     @GetMapping("/follow")
-    String follow(){
+    String follow() {
         List<InstagramUserSummary> followers = instagramUserService.getFollowers();
         instagramUserService.follow(followers);
         return "followed";
     }
+
     @GetMapping("/unfollow")
-    String unfollow(){
+    String unfollow() {
         List<InstagramUserSummary> followers = instagramUserService.getFollowers();
         instagramUserService.unfollow(followers);
         return "unfollowed";

@@ -31,7 +31,7 @@ public class InstagramSession {
         this.password = password;
         this.userId = userId;
         this.uuid = uuid;
-        this.cookieStore = (BasicCookieStore)cookieStore;
+        this.cookieStore = (BasicCookieStore) cookieStore;
         this.proxy = proxy;
     }
 }
