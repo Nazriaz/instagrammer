@@ -7,6 +7,7 @@ import org.brunocvcunha.instagram4j.requests.payload.InstagramUser;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramUserSummary;
 import org.nazriaz.instagrammer.service.FeedService;
 import org.nazriaz.instagrammer.service.InstagramUserService;
+import org.nazriaz.instagrammer.service.InstagramUserSummaryService;
 import org.nazriaz.instagrammer.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,8 @@ public class Controller {
     LoginService loginService;
     @Autowired
     InstagramUserService instagramUserService;
+    @Autowired
+    InstagramUserSummaryService instagramUserSummaryService;
 
     @GetMapping("/login")
     String login() throws IOException {
@@ -41,6 +44,12 @@ public class Controller {
     String save() {
         loginService.saveCurrentSession();
         return "saved";
+    }
+    @GetMapping("/savefollowers")
+    String savefollowers(){
+        List<InstagramUserSummary> followers = instagramUserService.getFollowers();
+        instagramUserSummaryService.saveToDb(followers);
+        return "savefollowers done";
     }
 
     @GetMapping("/getuser")
